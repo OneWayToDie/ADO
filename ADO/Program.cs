@@ -23,28 +23,45 @@ namespace ADO
 			SqlConnection connection = new SqlConnection(connection_string);
 			connection.Open();
 
-			//string cmd = "Select * FROM Movies";
-			string cmd = "SELECT movie_id, title, release_date, first_name, last_name FROM Movies, Directors WHERE director=director_id";
-			SqlCommand command = new SqlCommand(cmd, connection);
+			string selectQuery = "SELECT movie_id, title, release_date, first_name, last_name FROM Movies, Directors WHERE director = director_id";
+			ExecuteSelectQuery(connection, selectQuery);
 
+			string countQuery = "SELECT COUNT(*) FROM Movies";
+			object recordCount = ExecuteScalarQuery(connection, countQuery);
+			Console.WriteLine($"Количество записей:\t{recordCount}");
+			connection.Close();
+		}
+
+		static void ExecuteSelectQuery(SqlConnection connection, string cmd)
+		{
+			SqlCommand command = new SqlCommand(cmd, connection);
 			SqlDataReader reader = command.ExecuteReader();
+
 			for (int i = 0; i < reader.FieldCount; i++)
 				Console.Write(reader.GetName(i) + "\t");
 			Console.WriteLine();
+
 			while (reader.Read())
 			{
-				for(int i = 0; i < reader.FieldCount;i++) 
+				for (int i = 0; i < reader.FieldCount; i++)
 				{
 					Console.Write($"{reader[i]}\t");
 				}
 				Console.WriteLine();
 			}
 			reader.Close();
+		}
 
-			command.CommandText = "SELECT COUNT(*) FROM Movies";
-			Console.WriteLine($"Количество записей:\t{command.ExecuteScalar()}");
+		static object ExecuteScalarQuery(SqlConnection connection, string cmd)
+		{
+			SqlCommand command = new SqlCommand(cmd, connection);
+			object result = command.ExecuteScalar();
 
-			connection.Close();
+			if (result == null)
+				return null;
+
+			return result;
+
 		}
 	}
 }
