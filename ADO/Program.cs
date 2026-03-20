@@ -57,11 +57,7 @@ namespace ADO
 			SqlCommand command = new SqlCommand(cmd, connection);
 			object result = command.ExecuteScalar();
 
-			if (result == null)
-				return null;
-
 			return result;
-
 		}
 	}
 }
