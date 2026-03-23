@@ -26,7 +26,6 @@ namespace ADO
 
 			Console.WriteLine($"PK Max:\t{connector.GetMaxPrimaryKey("Directors")}");
 
-			//string cmd = "SELECT movie_id, title, release_date, first_name, last_name FROM Movies, Directors WHERE director=director_id";
 
 			connector.Select("*", "Directors");
 			Console.WriteLine($"Количество записей: {connector.Scalar("SELECT COUNT(*) FROM Directors")}");
@@ -39,10 +38,6 @@ namespace ADO
 				);
 			Console.WriteLine($"Количество записей: {connector.Scalar("SELECT COUNT(*) FROM Directors")}");
 
-			//command.CommandText = "SELECT COUNT(*) FROM Movies";
-			//Console.WriteLine($"Количество записей:\t{command.ExecuteScalar()}");
-
-			//connection.Close();
 		}
 
 
