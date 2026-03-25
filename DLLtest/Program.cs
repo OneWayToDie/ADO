@@ -4,8 +4,9 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
-using DBtools;
-using static System.Net.Mime.MediaTypeNames;
+//using DBtools;
+//using static System.Net.Mime.MediaTypeNames;
+using System.Configuration;
 
 namespace DLLtest
 {
@@ -13,18 +14,17 @@ namespace DLLtest
 	{
 		static void Main(string[] args)
 		{
-			Connector connector = new Connector
+			DBtools.Connector connector = new DBtools.Connector
 				(
-					"Data Source = (localdb)\\MSSQLLocalDB; " +
-					"Initial Catalog = Movies_PV_521; " +
-					"Integrated Security = True; " +
-					"Connect Timeout = 30; " +
-					"Encrypt = False; " +
-					"TrustServerCertificate = False; " +
-					"ApplicationIntent = ReadWrite; " +
-					"MultiSubnetFailover = False"
+					ConfigurationManager.ConnectionStrings["Movies_PV_521"].ConnectionString
 				);
 			connector.Select("SELECT * FROM Directors");
+
+			DBtools.Connector academy_connector = new DBtools.Connector
+				(
+					ConfigurationManager.ConnectionStrings["PV_521_Import"].ConnectionString
+				);
+			academy_connector.Select("SELECT * FROM Disciplines");
 		}
 	}
 }
