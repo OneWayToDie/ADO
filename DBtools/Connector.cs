@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ADO
+namespace DBtools
 {
-	internal class Connector
+	public class Connector
 	{
 		string connection_string;
 		SqlConnection connection;
@@ -74,11 +74,11 @@ namespace ADO
 		}
 		public string GetPrimaryKeyColumnName(string table)
 		{
-			string raw = @"RAW string";	//RAW - строка игнорирует переносы
+			string raw = @"RAW string"; //RAW - строка игнорирует переносы
 			string cmd = $@"SELECT  INFORMATION_SCHEMA.KEY_COLUMN_USAGE.COLUMN_NAME		
 FROM	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
 WHERE TABLE_NAME=N'{table}'
-AND CONSTRAINT_NAME LIKE N'PK_%'";		
+AND CONSTRAINT_NAME LIKE N'PK_%'";
 			return (string)Scalar(cmd);
 		}
 		public void Insert(string cmd)
@@ -105,7 +105,7 @@ AND CONSTRAINT_NAME LIKE N'PK_%'";
 			string condition = "";
 			string[] s_fields = fields.Split(',');
 			string[] s_values = values.Split(',');
-			string parsed_values =  $"N'{s_values[0]}',";
+			string parsed_values = $"N'{s_values[0]}',";
 			for (int i = 1; i < s_fields.Length; i++)
 			{
 				condition += $" {s_fields[i]} = N'{s_values[i]}' ";
