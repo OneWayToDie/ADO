@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -19,32 +20,40 @@ namespace DBtools
 			connection = new SqlConnection(connection_string);
 		}
 
-		public void Select(string cmd)
+		public DataTable Select(string cmd)
 		{
+			DataTable table = new DataTable();
 			connection.Open();
 			SqlCommand command = new SqlCommand(cmd, connection);
 
 			SqlDataReader reader = command.ExecuteReader();
 			for (int i = 0; i < reader.FieldCount; i++)
+			{
 				Console.Write(reader.GetName(i) + "\t");
+				table.Columns.Add(reader.GetName(i));
+			}
 			Console.WriteLine();
 			while (reader.Read())
 			{
+				DataRow row = table.NewRow();
 				for (int i = 0; i < reader.FieldCount; i++)
 				{
+					row[i] = reader[i];
 					Console.Write($"{reader[i]}\t");
 				}
 				Console.WriteLine();
+				table.Rows.Add(row);
 			}
 			reader.Close();
 			connection.Close();
+			return table;
 		}
-		public void Select(string fields, string tables, string condition = "")
+		public DataTable Select(string fields, string tables, string condition = "")
 		{
 			string cmd = $"SELECT {fields} FROM {tables}";
 			if (condition != "") cmd += $" WHERE {condition}";
 			cmd += ";";
-			Select(cmd);
+			return Select(cmd);
 		}
 		public object Scalar(string cmd)
 		{
