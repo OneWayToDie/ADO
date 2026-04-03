@@ -137,6 +137,7 @@ AND CONSTRAINT_NAME LIKE N'PK_%'";
 				condition += $" {s_fields[i]} = N'{s_values[i]}' ";
 				if(s_values[i].Length > 1)
 					parsed_values += s_values[i][0] != 'N' && s_values[i][1] != '\'' ? $"N'{s_values[i]}'" : s_values[i];
+				else parsed_values += s_values[i];
 				if (i != s_fields.Length - 1)
 				{
 					condition += "AND";
