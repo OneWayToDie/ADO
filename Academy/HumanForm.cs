@@ -12,14 +12,17 @@ using System.Configuration;
 
 namespace Academy
 {
-	public abstract partial class HumanForm : Form
+	public partial class HumanForm : Form
 	{
 		static protected DBtools.Connector connector;
-		public HumanForm()
+		protected HumanForm()
 		{
 			InitializeComponent();
 		}
 
-		protected abstract void buttonOK_Click(object sender, EventArgs e);
+		protected virtual void buttonOK_Click(object sender, EventArgs e)
+		{
+			
+		}
 	}
 }
