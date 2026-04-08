@@ -31,6 +31,15 @@ namespace Academy
 			cbGroup.DisplayMember = "group_name";
 			cbGroup.ValueMember = "group_id";
 		}
+		public StudentForm(int id):this()
+		{
+			DataTable data = DataBase.connector.Select("*", "Students", $"stud_id={id}");
+			//object[] arr = data.Rows[0].ItemArray;
+			student = new Models.Student(data.Rows[0].ItemArray);
+			human = student;
+			Extract();
+			cbGroup.SelectedValue = student.group;
+		}
 		protected override void buttonOK_Click(object sender, EventArgs e)
 		{
 			base.buttonOK_Click(sender, e);

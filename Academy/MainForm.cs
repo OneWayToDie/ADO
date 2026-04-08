@@ -17,7 +17,7 @@ namespace Academy
 		{
 			new Query
 				(
-				"last_name,first_name,middle_name,group_name,direction_name",
+				"stud_id,last_name,first_name,middle_name,group_name,direction_name",
 				"Students,Groups,Directions",
 				"[group]=group_id AND direction=direction_id"
 				),
@@ -106,6 +106,15 @@ namespace Academy
 			studentForm = new StudentForm();
 			if(studentForm.ShowDialog()==DialogResult.OK)
 				tabControl_SelectedIndexChanged(tabControl, null);
+		}
+
+		private void dgvStudents_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			StudentForm form = new StudentForm
+				(
+				Convert.ToInt32(dgvStudents.Rows[e.RowIndex].Cells["stud_id"].Value)
+				);
+			form.ShowDialog();
 		}
 	}
 }
