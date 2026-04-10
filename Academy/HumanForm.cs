@@ -47,5 +47,14 @@ namespace Academy
 				pbPhoto.Image
 				);
 		}
+
+		private void buttonBrowse_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = 
+				"JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|All image files|*.png;*.jpg|All files (*.*)|*.*";
+			if(dialog.ShowDialog() == DialogResult.OK)
+				pbPhoto.Image = Image.FromFile(dialog.FileName);
+		}
 	}
 }

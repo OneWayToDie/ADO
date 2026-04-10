@@ -39,6 +39,7 @@ namespace Academy
 			human = student;
 			Extract();
 			cbGroup.SelectedValue = student.group;
+			pbPhoto.Image = DataBase.connector.Download_photo("Students", "photo", student.id);
 		}
 		protected override void buttonOK_Click(object sender, EventArgs e)
 		{
