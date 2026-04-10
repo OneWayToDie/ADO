@@ -150,5 +150,21 @@ AND CONSTRAINT_NAME LIKE N'PK_%'";
 			cmd += $"INSERT {table}({parsed_fields}) VALUES ({parsed_values})";
 			Insert(cmd);
 		}
+		public void Update(string cmd)
+		{
+			SqlCommand command = new SqlCommand(cmd, connection);
+			connection.Open();
+			command.ExecuteNonQuery();
+			connection.Close();
+		}
+		public void Upload_photo(byte[] image, int id, string field, string table)
+		{
+			string cmd = $"UPDATE {table} SET {field}=@image WHERE {GetPrimaryKeyColumnName(table)}={id}";
+			SqlCommand command = new SqlCommand(cmd, connection);
+			command.Parameters.Add("@image", SqlDbType.VarBinary).Value=image;
+			connection.Open();
+			command.ExecuteNonQuery();
+			connection.Close();
+		}
 	}
 }
