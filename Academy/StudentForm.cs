@@ -19,12 +19,12 @@ namespace Academy
 		{
 			InitializeComponent();
 
-			tbLastName.Text = "Жук";
-			tbFirstName.Text = "Василий";
-			tbMiddleName.Text = "Петрович";
-			dtpBirthDate.Text = "1977.10.24";
-			tbEmail.Text = "bazilik_spb@mail.ru";
-			tbPhone.Text = "+7(911)024-56-78";
+			//tbLastName.Text = "Жук";
+			//tbFirstName.Text = "Василий";
+			//tbMiddleName.Text = "Петрович";
+			//dtpBirthDate.Text = "1977.10.24";
+			//tbEmail.Text = "bazilik_spb@mail.ru";
+			//tbPhone.Text = "+7(911)024-56-78";
 
 			DataTable groups = DataBase.connector.Select("SELECT * FROM Groups");
 			cbGroup.DataSource = groups;
@@ -47,10 +47,15 @@ namespace Academy
 
 			student = new Models.Student(human,Convert.ToInt32(cbGroup.SelectedValue));
 			//object id = (int)DataBase.connector.Scalar($"SELECT stud_id FROM Students WHERE {student.GetCondition()}");
-			if (student.id == 0) DataBase.connector.Insert("Students", $"{student.GetNames()}", $"{student.GetValues()}");
+			if (student.id == 0) student.id = Convert.ToInt32(DataBase.connector.Scalar
+			(
+				$"INSERT Students({student.GetNames()}) VALUES ({student.GetValues()});SELECT SCOPE_IDENTITY()")
+			);
 			else DataBase.connector.Update($"UPDATE Students SET {student.GetUpdateString()} WHERE stud_id={student.id}");
-			if(student.photo != null)
+			if (student.photo != null)
+			{
 				DataBase.connector.Upload_photo(student.SerializePhoto(), student.id, "photo", "Students");
+			}
 
 			//DataBase.connector.Insert
 			//	(
