@@ -81,5 +81,9 @@ namespace Academy.Models
 				   $"AND email=N'{email}' " +
 				   $"AND phone=N'{phone}'";
 		}
+		public string GetUpdateString()
+		{
+			return GetCondition().Replace(" AND ", ",");
+		}
 	}
 }
