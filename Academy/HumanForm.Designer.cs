@@ -186,6 +186,7 @@
 			this.tbPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.tbPhone.ImeMode = System.Windows.Forms.ImeMode.NoControl;
 			this.tbPhone.Location = new System.Drawing.Point(173, 192);
+			this.tbPhone.MaxLength = 16;
 			this.tbPhone.Name = "tbPhone";
 			this.tbPhone.Size = new System.Drawing.Size(254, 29);
 			this.tbPhone.TabIndex = 13;

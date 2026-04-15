@@ -30,7 +30,7 @@ namespace Academy.Models
 		public Teacher(object[] values) : base(values)
 		{
 			this.work_since = values[8].ToString();
-			this.rate = Convert.ToDecimal(values[9]);
+			this.rate = Convert.ToDecimal(values[9].ToString().Split(',').First());
 		}
 		public override string GetNames()
 		{
@@ -44,9 +44,5 @@ namespace Academy.Models
 		{
 			return base.GetCondition() + $" AND work_since=N'{work_since}' AND rate={rate}";
 		}
-		//public string GetUpdateString()
-		//{
-		//	return GetCondition().Replace(" AND ", ",");
-		//}
 	}
 }

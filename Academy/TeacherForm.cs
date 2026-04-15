@@ -18,6 +18,16 @@ namespace Academy
 		{
 			InitializeComponent();
 		}
+		public TeacherForm(int id) : this()
+		{
+			DataTable table = DataBase.connector.Select($"SELECT * FROM Teachers WHERE teacher_id={id}");
+			teacher = new Models.Teacher(table.Rows[0].ItemArray);
+			human = teacher;
+			Extract();
+			this.dtpWorkSince.Value = Convert.ToDateTime(teacher.work_since);
+			this.tbRate.Text = teacher.rate.ToString();
+			pbPhoto.Image = DataBase.connector.Download_photo("Teachers", "photo", id);
+		}
 		protected override void buttonOK_Click(object sender, EventArgs e)
 		{
 			base.buttonOK_Click(sender, e);

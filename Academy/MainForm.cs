@@ -125,5 +125,17 @@ namespace Academy
 				tabControl_SelectedIndexChanged(tabControl, null);
 			}
 		}
+
+		private void dgvTeachers_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			TeacherForm teacher = new TeacherForm
+				(
+				Convert.ToInt32(dgvTeachers.Rows[e.RowIndex].Cells["teacher_id"].Value)
+				);
+			if (teacher.ShowDialog() == DialogResult.OK)
+			{
+				tabControl_SelectedIndexChanged(tabControl, null);
+			}
+		}
 	}
 }
